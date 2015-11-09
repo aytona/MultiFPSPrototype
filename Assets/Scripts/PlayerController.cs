@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerMotor))]
+[RequireComponent(typeof(ConfigurableJoint))]
 public class PlayerController : MonoBehaviour {
 
     [SerializeField]
@@ -8,12 +9,24 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float mouseSensitivity = 3f;
     [SerializeField]
-    private float thrusterForce = 100f;
+    private float thrusterForce = 150f;
+
+    [Header("Joint settings:")]
+    [SerializeField]
+    private JointDriveMode jointMode = JointDriveMode.Position;
+    [SerializeField]
+    private float jointSpring = 5f;
+    [SerializeField]
+    private float jointMaxForce = 10f;
+
     private PlayerMotor motor;
+    private ConfigurableJoint joint;
 
     void Start()
     {
+        joint = GetComponent<ConfigurableJoint>();
         motor = GetComponent<PlayerMotor>();
+        SetJointSettings(jointSpring);
     }
 
     void Update()
@@ -39,7 +52,22 @@ public class PlayerController : MonoBehaviour {
         // Thruster Force
         Vector3 _thrusterForce = Vector3.zero;
         if (Input.GetButton("Jump"))
+        {
             _thrusterForce = Vector3.up * thrusterForce;
+            SetJointSettings(0f);
+        }
+        else
+            SetJointSettings(jointSpring);
         motor.ApplyThruster(_thrusterForce);
+    }
+
+    private void SetJointSettings(float _jointSpring)
+    {
+        joint.yDrive = new JointDrive
+        {
+            mode = jointMode,
+            positionSpring = _jointSpring,
+            maximumForce = jointMaxForce
+        };
     }
 }
