@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     private float speed = 10f;
     [SerializeField]
     private float mouseSensitivity = 3f;
+    [SerializeField]
+    private float thrusterForce = 100f;
     private PlayerMotor motor;
 
     void Start()
@@ -33,5 +35,11 @@ public class PlayerController : MonoBehaviour {
         float xRotation = Input.GetAxisRaw("Mouse Y");
         Vector3 cameraRotation = new Vector3(xRotation, 0f, 0f) * mouseSensitivity;
         motor.CameraRotate(cameraRotation);
+
+        // Thruster Force
+        Vector3 _thrusterForce = Vector3.zero;
+        if (Input.GetButton("Jump"))
+            _thrusterForce = Vector3.up * thrusterForce;
+        motor.ApplyThruster(_thrusterForce);
     }
 }
