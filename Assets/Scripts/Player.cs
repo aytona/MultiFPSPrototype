@@ -28,6 +28,7 @@ public class Player : NetworkBehaviour
 
     void Update()
     {
+        // Testing purpose
         if (!isLocalPlayer)
             return;
         if (Input.GetKeyDown(KeyCode.K))
@@ -100,6 +101,16 @@ public class Player : NetworkBehaviour
             _col.enabled = false;
 
         Debug.Log(transform.name + " is Dead");
+
+        StartCoroutine(Respawn());
+    }
+
+    private IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(3f);
+        SetDefaults();
+        Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
+        transform.position = _spawnPoint.position;
     }
 
     #endregion Private Methods
