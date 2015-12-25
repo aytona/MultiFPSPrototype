@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerShoot : NetworkBehaviour {
+public class PlayerShoot : NetworkBehaviour
+{
+
+    #region Variables
 
     public PlayerWeapon weapon;
 
@@ -11,6 +14,10 @@ public class PlayerShoot : NetworkBehaviour {
     private LayerMask mask;
 
     private const string PLAYER_TAG = "Player";
+
+    #endregion Variables
+
+    #region Monobehaviour
 
     void Start()
     {
@@ -23,6 +30,10 @@ public class PlayerShoot : NetworkBehaviour {
         if (Input.GetButtonDown("Fire1"))
             Shoot();
     }
+
+    #endregion Monobehaviour
+
+    #region Private Methods
 
     [Client]
     private void Shoot()
@@ -37,6 +48,8 @@ public class PlayerShoot : NetworkBehaviour {
     private void CmdPlayerHit(string _playerID, int _damage)
     {
         Player _player = GameManager.GetPlayer(_playerID);
-        _player.TakeDamage(_damage);
+        _player.RpcTakeDamage(_damage);
     }
+
+    #endregion Private Methods
 }

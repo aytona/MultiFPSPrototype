@@ -22,14 +22,4 @@ public class GameManager : MonoBehaviour {
     {
         return players[_playerID];
     }
-
-    //void OnGUI()
-    //{
-    //    GUILayout.BeginArea(new Rect(200, 200, 200, 500));
-    //    GUILayout.BeginVertical();
-    //    foreach (string _playerID in players.Keys)
-    //        GUILayout.Label(_playerID + " - " + players[_playerID].transform.name);
-    //    GUILayout.EndVertical();
-    //    GUILayout.EndArea();
-    //}
 }
