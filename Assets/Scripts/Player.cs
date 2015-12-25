@@ -24,19 +24,6 @@ public class Player : NetworkBehaviour
 
     #endregion Variables
 
-    #region Monobehaviour
-
-    void Update()
-    {
-        // Testing purpose
-        if (!isLocalPlayer)
-            return;
-        if (Input.GetKeyDown(KeyCode.K))
-            Die();
-    }
-    
-    #endregion Monobehaviour
-
     #region Public Methods
 
     public void Setup()
@@ -107,7 +94,7 @@ public class Player : NetworkBehaviour
 
     private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(GameManager.Instance.matchSettings.spawnTime);
         SetDefaults();
         Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
         transform.position = _spawnPoint.position;

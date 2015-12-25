@@ -1,15 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-
-    #region Singleton
-
-    public static GameManager instance;
-
-    #endregion Singleton
-
     #region Variables
 
     public MatchSettings matchSettings;
@@ -18,16 +11,6 @@ public class GameManager : MonoBehaviour
     private static Dictionary<string, Player> players = new Dictionary<string, Player>();
 
     #endregion Variables
-
-    #region Monobehaviour
-
-    void Awake()
-    {
-        if (instance != null)
-            instance = this;
-    }
-
-    #endregion Monobehaviour
 
     #region Public Methods
 
